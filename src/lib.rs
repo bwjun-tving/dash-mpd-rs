@@ -492,6 +492,15 @@ where S: serde::Serializer {
     }
 }
 
+fn serialize_mspr_ns<S>(os: &Option<String>, serializer: S) -> Result<S::Ok, S::Error>
+where S: serde::Serializer {
+    if let Some(s) = os {
+        serializer.serialize_str(s)
+    } else {
+        serializer.serialize_str("urn:microsoft:playready")
+    }
+}
+
 fn serialize_xlink_ns<S>(os: &Option<String>, serializer: S) -> Result<S::Ok, S::Error>
 where S: serde::Serializer {
     if let Some(s) = os {
@@ -1823,6 +1832,9 @@ pub struct MPD {
     #[serialize_always]
     #[serde(rename="@xmlns:cenc", alias="@cenc", serialize_with="serialize_cenc_ns")]
     pub cenc: Option<String>,
+    #[serialize_always]
+    #[serde(rename="@xmlns:mspr", alias="@mspr", serialize_with="serialize_mspr_ns")]
+    pub mspr: Option<String>,
     /// The XML namespace prefix used by convention for the XML Linking Language.
     #[serialize_always]
     #[serde(rename="@xmlns:xlink", alias="@xlink", serialize_with="serialize_xlink_ns")]
