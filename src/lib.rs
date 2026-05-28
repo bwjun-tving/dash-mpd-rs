@@ -1693,6 +1693,9 @@ pub struct AdaptationSet {
     pub startWithSAP: Option<u64>,
     #[serde(rename = "@codingDependency")]
     pub codingDependency: Option<bool>,
+    /// A custom (vendor-specific) attribute in the TVING DASH extension namespace.
+    #[serde(rename = "@tving:label", alias = "@label")]
+    pub tving_label: Option<String>,
     pub FramePacking: Vec<FramePacking>,
     pub AudioChannelConfiguration: Vec<AudioChannelConfiguration>,
     pub ContentProtection: Vec<ContentProtection>,
@@ -2183,6 +2186,9 @@ pub struct MPD {
     // scte214 namespace
     #[serde(alias = "@scte214", rename = "@xmlns:scte214")]
     pub scte214: Option<String>,
+    /// The XML namespace prefix used for the TVING DASH extensions.
+    #[serde(rename = "@xmlns:tving", alias = "@tving")]
+    pub tving: Option<String>,
     pub ProgramInformation: Vec<ProgramInformation>,
     /// There may be several BaseURLs, for redundancy (for example multiple CDNs)
     #[serde(rename = "BaseURL")]
